@@ -1,0 +1,11 @@
+### Guardar un nuevo paciente
+POST http://localhost:8080/api/pacientes
+Content-Type: application/json
+
+{
+  "nombre": "Carlos",
+  "apellidos": "García Pérez",
+  "dni": "12345678A",
+  "telefono": "600112233",
+  "email": "carlos.garcia@email.com"
+}
