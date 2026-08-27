@@ -1,13 +1,8 @@
-package com.centromedico.api.model;
+package com.centromedico.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.persistence.*;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pacientes")
@@ -17,83 +12,49 @@ public class Paciente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El nombre es obligatorio")
+    @Column(nullable = false)
     private String nombre;
 
-    @NotBlank(message = "Los apellidos son obligatorios")
-    private String apellidos;
+    @Column(nullable = false)
+    private String apellido;
 
-    @NotBlank(message = "El DNI es obligatorio")
-    @Pattern(regexp = "^[0-9]{8}[A-Za-z]$", message = "El DNI debe tener 8 números y 1 letra")
+    @Column(nullable = false, unique = true)
     private String dni;
 
-    @NotBlank(message = "El teléfono es obligatorio")
-    @Pattern(regexp = "^[0-9]{9}$", message = "El teléfono debe contener exactamente 9 dígitos")
     private String telefono;
-
-    @NotBlank(message = "El email es obligatorio")
-    @Email(message = "El formato del email no es válido")
     private String email;
 
-    // Constructores
-    public Paciente() {
-    }
+    // Relación opcional en cascada si manejas citas en el backend
+    // @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    // @JsonIgnore
+    // private List<Cita> citas;
 
-    public Paciente(Long id, String nombre, String apellidos, String dni, String telefono, String email) {
+    public Paciente() {}
+
+    public Paciente(Long id, String nombre, String apellido, String dni, String telefono, String email) {
         this.id = id;
         this.nombre = nombre;
-        this.apellidos = apellidos;
+        this.apellido = apellido;
         this.dni = dni;
         this.telefono = telefono;
         this.email = email;
     }
 
-    // Getters y Setters
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getApellido() { return apellido; }
+    public void setApellido(String apellido) { this.apellido = apellido; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public String getDni() { return dni; }
+    public void setDni(String dni) { this.dni = dni; }
 
-    public String getApellidos() {
-        return apellidos;
-    }
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 }
