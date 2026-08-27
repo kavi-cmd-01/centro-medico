@@ -10,16 +10,19 @@ public class Paciente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(nullable = false)
+    @Column(name = "apellido", nullable = false)
     private String apellido;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "dni", nullable = false)
     private String dni;
 
+    @Column(name = "telefono")
     private String telefono;
+
+    @Column(name = "email")
     private String email;
 
     public Paciente() {}

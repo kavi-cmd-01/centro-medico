@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/pacientes")
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PacienteController {
 
     @Autowired
@@ -19,17 +19,24 @@ public class PacienteController {
 
     @GetMapping
     public ResponseEntity<List<Paciente>> obtenerTodos() {
-        return ResponseEntity.ok(pacienteRepository.findAll());
+        try {
+            List<Paciente> lista = pacienteRepository.findAll();
+            return ResponseEntity.ok(lista);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PostMapping
     public ResponseEntity<?> crearPaciente(@RequestBody Paciente paciente) {
         try {
-            paciente.setId(null);
+            paciente.setId(null); // Asegura que se interprete como inserción nueva
             Paciente guardado = pacienteRepository.save(paciente);
             return ResponseEntity.status(HttpStatus.CREATED).body(guardado);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear paciente: " + e.getMessage());
         }
     }
 
@@ -48,14 +55,14 @@ public class PacienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarPaciente(@PathVariable Long id) {
         if (!pacienteRepository.existsById(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El paciente no existe.");
+            return ResponseEntity.notFound().build();
         }
         try {
             pacienteRepository.deleteById(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al eliminar el paciente.");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar el paciente");
         }
     }
 }
