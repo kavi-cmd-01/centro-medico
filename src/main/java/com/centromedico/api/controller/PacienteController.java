@@ -1,7 +1,7 @@
-package com.centromedico.backend.controller;
+package com.centromedico.api.controller;
 
-import com.centromedico.backend.model.Paciente;
-import com.centromedico.backend.repository.PacienteRepository;
+import com.centromedico.api.model.Paciente;
+import com.centromedico.api.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +55,7 @@ public class PacienteController {
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("No se pudo eliminar el paciente. Verifica que no tenga registros asociados.");
+                    .body("Error al eliminar el paciente.");
         }
     }
 }

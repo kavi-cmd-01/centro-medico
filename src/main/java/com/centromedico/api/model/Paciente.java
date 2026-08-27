@@ -1,8 +1,6 @@
-package com.centromedico.backend.model;
+package com.centromedico.api.model;
 
 import jakarta.persistence.*;
-import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pacientes")
@@ -23,11 +21,6 @@ public class Paciente {
 
     private String telefono;
     private String email;
-
-    // Relación opcional en cascada si manejas citas en el backend
-    // @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
-    // @JsonIgnore
-    // private List<Cita> citas;
 
     public Paciente() {}
 
