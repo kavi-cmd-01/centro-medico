@@ -7,22 +7,13 @@ import jakarta.persistence.*;
 public class Paciente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "nombre", nullable = false)
     private String nombre;
-
-    @Column(name = "apellido", nullable = false)
     private String apellido;
-
-    @Column(name = "dni", nullable = false)
     private String dni;
-
-    @Column(name = "telefono")
     private String telefono;
-
-    @Column(name = "email")
     private String email;
 
     public Paciente() {}
